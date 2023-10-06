@@ -1,6 +1,15 @@
-import { NavLink } from "react-router-dom";
-
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
+import userImg from "../../assets/user.png"
 const Navbar = () => {
+
+  const {user,logOut}=useContext(AuthContext)
+// console.log(user)
+  const singOut =()=>{
+    logOut();
+  }
+
   const links = (
     <>
       <li>
@@ -32,8 +41,8 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="relative">
-      <nav className="bg-white dark:bg-gray-900  w-[83%] z-20 flex justify-center border-b border-gray-200 dark:border-gray-600">
+    <div className="">
+      <nav className="relative bg-white dark:bg-gray-900   z-20 flex justify-center border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto p-4 ">
           <div className="flex md:order-2">
             <button
@@ -70,8 +79,10 @@ const Navbar = () => {
                     links
                 }
             </ul>
-            <div className="absolute right-0 top-2">
-              <button className="focus:outline-none text-white bg-black hover:bg-gray-600 focus:ring-4 focus:ring-black font-medium  text-sm px-5 py-2.5  dark:bg-black dark:hover:bg-black dark:focus:ring-black">Login</button>
+            <div className="absolute flex justify-between gap-5 right-0 top-2">
+              {
+                user? <div className="">{user.photoURL?<img src={user.photoURL} alt="" className="" />:<img className="h-10! " src={userImg}/>} <button onClick={singOut} className="focus:outline-none text-white bg-black hover:bg-gray-600 focus:ring-4 focus:ring-black font-medium  text-sm px-5 py-2.5  dark:bg-black dark:hover:bg-black dark:focus:ring-black">LogOut</button></div> : <Link to="/Login"><button className="focus:outline-none text-white bg-black hover:bg-gray-600 focus:ring-4 focus:ring-black font-medium  text-sm px-5 py-2.5  dark:bg-black dark:hover:bg-black dark:focus:ring-black">Login</button></Link>
+              }
             </div>
           </div>
         </div>

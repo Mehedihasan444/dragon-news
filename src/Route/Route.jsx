@@ -7,6 +7,7 @@ import NewsDetails from "../Pages/NewsDetails/NewsDetails";
 import PrivateRoute from "./PrivateRoute";
 import Login from "../Pages/Login/Login";
 import Resister from "../Pages/Resister/Resister";
+import Newses from "../Components/Newses/Newses";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -14,7 +15,12 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>
+        element: <Home></Home>,
+        children:[{
+          path:'/Newses/:id',
+          element:<Newses ></Newses>,
+          
+        }]
       },
       {
         path:"/About",

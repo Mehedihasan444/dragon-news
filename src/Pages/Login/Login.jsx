@@ -1,20 +1,25 @@
 /* eslint-disable react/no-unescaped-entities */
 import {sendPasswordResetEmail,} from "firebase/auth";
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useContext } from "react";
 import {AuthContext} from "../../Providers/AuthProvider"
 import Header from "../../Components/Header/Header";
+import auth from "../../firebase/firebase.config";
 
 const Login = () => {
 
-  const {LogIn}=useContext(AuthContext);
+  const {logIn}=useContext(AuthContext);
 
   const [resisterError, setResisterError] = useState("");
   const [resisterSuccess, setResisterSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const emailRef = useRef(null);
+
+const location = useLocation();
+const navigate =  useNavigate();
+
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -26,7 +31,7 @@ const Login = () => {
     setResisterError("");
     setResisterSuccess("");
 
-    LogIn( email, password)
+    logIn( email, password)
       .then((result) => {
         console.log(result.user);
         if (result.user.emailVerified) {
@@ -34,6 +39,7 @@ const Login = () => {
         } else {
           alert("please verify your email address");
         }
+        navigate(location?.state?location.state:'/')
       })
       .catch((error) => {
         console.log(error.message);
